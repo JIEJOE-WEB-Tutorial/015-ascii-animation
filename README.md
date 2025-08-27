@@ -15,4 +15,4 @@
 ## **Notice⚠️**
 - 项目中所用到的gifuct-js官方文档，详细请参考[链接](https://github.com/matt-way/gifuct-js)
 - 输入的GIF图需未经压缩，即每一帧都是完整的，否则生成的ASCII文字会出错
-- 如果GIF压缩过，可以使用Ae配合项目中列出的插件GifGun、勾选Preserve colors per frame(保留每一帧颜色)无压缩导出
+- 如果GIF压缩过，可以使用Ae配合插件[GifGun](https://www.gifgun.io)、勾选Preserve colors per frame(保留每一帧颜色)无压缩导出
