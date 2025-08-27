@@ -1,6 +1,6 @@
 # 15 - ASCII动画效果
-<a href="https://www.bilibili.com/video/BV1MjoMYWEfY">
-<img src="https://i1.hdslb.com/bfs/archive/102e5bf729bf1e69e58ad6cdbeb881429ce7e9bf.jpg" width="70%">
+<a href="https://www.bilibili.com/video/BV1H6eyzYE3V">
+<img src="https://i0.hdslb.com/bfs/archive/2a669f0c678d02bdd52667cf67a4bec36d83fa45.jpg" width="70%">
 </a>
 
 **👆👆点击跳转: Bilibili📺教程视频链接**
