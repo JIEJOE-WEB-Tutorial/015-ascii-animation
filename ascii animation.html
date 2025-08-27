@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ascii animation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-size: 1vmin;
+        }
+
+        body {
+            display: flex;
+            position: relative;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100dvh;
+            background-color: #171717;
+            overflow: hidden;
+        }
+
+        .asciibox {
+            font-size: 1rem;
+            color: #17f700;
+            line-height: 1.5rem;
+            letter-spacing: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <pre class="asciibox"></pre>
+</body>
+
+<script type="module">
+    // JIEJOE produce
+    // b站主页：https://space.bilibili.com/3546390319860710
+    import { parseGIF, decompressFrames } from 'https://cdn.jsdelivr.net/npm/gifuct-js@2.1.2/+esm';
+    const asciibox = {
+        container: document.querySelector(".asciibox"),
+        width: 0,
+        height: 0,
+        scale_nums: 6,
+        texts: [],
+        current_text_index: 0,
+        init() {
+            fetch("ascii.gif")
+                .then((resp) => resp.arrayBuffer())
+                .then((buff) => {
+                    const gif = parseGIF(buff);
+                    this.width = gif.lsd.width;
+                    this.height = gif.lsd.height;
+                    decompressFrames(gif, true).forEach(frame => {
+                        const canvas = document.createElement("canvas");
+                        const ctx = canvas.getContext("2d");
+                        canvas.width = frame.dims.width;
+                        canvas.height = frame.dims.height;
+                        const image_data = new ImageData(
+                            frame.patch,
+                            frame.dims.width,
+                            frame.dims.height
+                        );
+                        ctx.putImageData(image_data, 0, 0);
+                        this.create_texts(ctx.getImageData(0, 0, this.width, this.height).data);
+                    });
+                    setInterval(() => {
+                        this.current_text_index = (this.current_text_index + 1) % (this.texts.length - 1);
+                        this.container.innerText = this.texts[this.current_text_index];
+                    }, 60);
+                });
+        },
+        create_texts(data) {
+            let text = "";
+            const levels = [["0", "1"], [".", "-"], [" "]];
+            for (let y = 0; y < this.height; y += this.scale_nums) {
+                let row = "";
+                for (let x = 0; x < this.width; x += this.scale_nums) {
+                    const i = (y * this.width + x) * 4;
+                    const avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
+                    const level = levels[Math.floor(avg / 255 * (levels.length - 1))];
+                    const char = level[parseInt(Math.random() * level.length)];
+                    row += char;
+                }
+                text += row + "\n";
+            }
+            this.texts.push(text);
+        }
+    };
+    asciibox.init();
+</script>
+
+</html>
